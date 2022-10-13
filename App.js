@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View,Image } from 'react-native';
-import Entypo from '@expo/vector-icons/Entypo';
-import * as SplashScreen from 'expo-splash-screen';
-import * as Font from 'expo-font';
-import Index from './src/Index'
+import React, { useCallback, useEffect, useState } from "react";
+import { Text, View, Image } from "react-native";
+import Entypo from "@expo/vector-icons/Entypo";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Index from "./src/Index";
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
@@ -17,7 +18,7 @@ export default function App() {
         await Font.loadAsync(Entypo.font);
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -41,14 +42,28 @@ export default function App() {
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return <Index />
+    return (
+      <SafeAreaProvider>
+        <Index />
+      </SafeAreaProvider>
+    );
   }
 
   return (
     <View
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:"#383838" }}
-      onLayout={onLayoutRootView}>
-      <Image style={{height: 180, width: 180}} resizeMode='contain' source={require('./src/assets/pere/logo.png')} />
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#383838",
+      }}
+      onLayout={onLayoutRootView}
+    >
+      <Image
+        style={{ flex: 1}}
+        resizeMode="contain"
+        source={require("./src/assets/splash.png")}
+      />
     </View>
   );
 }

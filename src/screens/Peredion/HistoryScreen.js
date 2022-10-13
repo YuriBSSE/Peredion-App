@@ -26,9 +26,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Loader from "../../components/Loader";
 import moment from "moment";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HistoryScreen = () => {
   const [data, onChangeData] = useState([]);
@@ -37,27 +35,26 @@ const HistoryScreen = () => {
 
   const apiHit = async () => {
     try {
-      const userData = await AsyncStorage.getItem("data")
-        if(userData){
-          const parseData =  JSON.parse(userData)
+      const userData = await AsyncStorage.getItem("data");
+      if (userData) {
+        const parseData = JSON.parse(userData);
 
-      const res = await axios.get(
-        `https://11kuda.com/api.php?deposit_history=${parseData.id}`
-      );
+        const res = await axios.get(
+          `https://11kuda.com/api.php?deposit_history=${parseData.id}`
+        );
 
-      if (res.status) {
-        // let array = [];
-        // array.push(res.data.data);
-        console.log(res.data, "DATA");
-        onChangeData(res.data.data);
-        onChangeLoader(false);
+        if (res.status) {
+          // let array = [];
+          // array.push(res.data.data);
+          console.log(res.data, "DATA");
+          onChangeData(res.data.data);
+          onChangeLoader(false);
+        }
       }
-    }
     } catch (err) {
       console.log(err, "ERROR");
       onChangeLoader(false);
     }
-  
   };
 
   useEffect(() => {
@@ -102,17 +99,17 @@ const HistoryScreen = () => {
         </Text>
         <View style={{ width: 50, height: 3, backgroundColor: "#D81254" }} />
         <TouchableOpacity
- 
+        onPress={() => { setModalVisible(true); }}
           style={{
             width: responsiveWidth(30),
             height: responsiveHeight(8),
-            backgroundColor: '#87CEEB',
-            justifyContent: 'center',
-            alignItems: 'center',
+            backgroundColor: "#87CEEB",
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 8,
           }}>
-          <Text style={{fontSize: responsiveFontSize(1.4)}}>
-          Make a Deposit
+          <Text style={{ fontSize: responsiveFontSize(1.4) }}>
+            Make a Deposit
           </Text>
         </TouchableOpacity>
       </View>
@@ -120,154 +117,151 @@ const HistoryScreen = () => {
         data={data}
         key={"#"}
         numColumns={2}
-          showsVerticalScrollIndicator={false}
-          columnWrapperStyle={{
-            flex: 1,
-            justifyContent: "space-around",
-          }}
+        showsVerticalScrollIndicator={false}
+        columnWrapperStyle={{
+          flex: 1,
+          justifyContent: "space-around",
+        }}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          <LinearGradient key={item.id} colors={["#e8e8e8", "#D81254"]} style={[styles.largeBox,{marginVertical: 10}]}>
-          {console.log(item.image, "IMAGES")}
-          <View style={styles.content}>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(2),
-                fontWeight: "600",
-                left: 10
-              }}
-            >
-            
-              Transaction Type:
-            </Text>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(1.4),
-                fontWeight: "400",
-                left: 10
-              }}
-            >
-             {"Funds Transfers"}
-            </Text> 
+          <LinearGradient
+            key={item.id}
+            colors={["#e8e8e8", "#D81254"]}
+            style={[styles.largeBox, { marginVertical: 10 }]}
+          >
             <View style={styles.content}>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(2),
-                fontWeight: "600",
-              //  width: 200
-              }}
-            >
-            
-            Transaction Method: 
-            </Text>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(1.4),
-                fontWeight: "400",
-              
-              }}
-            >
-             {item.method}
-            </Text> 
-            </View>
-            <View style={{alignItems:'center', flexDirection:'row',    left: 10}}>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(2),
-                fontWeight: "600",
-              }}
-            >
-            Amount:
-            </Text>
-            <Text
-              style={{
-                color: "black",
-                fontSize: responsiveFontSize(1.4),
-                fontWeight: "400",
-              }}
-            >
-           {"  "} {item.amount}
-            </Text> 
-            </View>
-            <View style={{ flexDirection:'column', justifyContent:'space-between', alignItems:"flex-start", alignSelf:'center',  width: responsiveWidth(48),    left: 10}}>
-             <View style={{alignItems:'flex-start', justifyContent:'space-around', flexDirection:'column'}}>
-                <Text style={{fontSize:14, fontWeight:'700', color:'white'}}>Date</Text>
-                <Text style={{fontSize:12, fontWeight:'400', color:'white',}}>{item.created_at}</Text>
-              </View>
-          
-             </View>
-             {
-              item.status == '1' ?
-            <TouchableOpacity
-              style={{
-                width: responsiveHeight(12),
-                height: responsiveWidth(8),
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "white",
-                top: 4,
-                borderRadius: 5, left: 10
-              }}
-            >
-          
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: responsiveFontSize(2),
+                  fontWeight: "600",
+                  left: 10,
+                }}
+              >
+                Transaction Type:
+              </Text>
               <Text
                 style={{
                   color: "black",
                   fontSize: responsiveFontSize(1.4),
-                  fontWeight: "700",
+                  fontWeight: "400",
+                  left: 10,
                 }}
               >
-                Pending...
+                {"Funds Transfers"}
               </Text>
-          
-            </TouchableOpacity>:null
-            }
-          </View>
-        </LinearGradient>
-          // <View style={styles.flatlist}>
-          // {/* <View style={{alignItems:"center",justifyContent:'flex-start', width: 70}}> */}
-          //   <Text style={[styles.text1,{textAlign:'left'}]} numberOfLines={3}>{item.title}</Text>
-          // {/* </View> */}
-          //   <Text style={styles.text1}>{item.start_date}</Text>
-          //   <Text style={styles.text1}>{item.Bet}</Text>
-          //   <Text style={styles.text1}>{item.RacingDate}</Text>
-          //   <Text style={styles.text1}>{item.Status}</Text>
-          //   <TouchableOpacity
-          //     style={{
-          //       backgroundColor: "#138496",
-          //       borderRadius: 8,
-          //     }}
-          //   >
-          //     <Text
-          //       style={{
-          //         fontSize: responsiveFontSize(1.2),
-          //         fontWeight: "400",
-          //         color: "white",
-          //         padding: 5,
-          //         textAlign: "center",
-          //       }}
-          //     >
-          //       {item.Action}
-          //     </Text>
-          //   </TouchableOpacity>
-          // </View>
+              <View style={styles.content}>
+                <Text
+                  style={{
+                    color: "black",
+                    fontSize: responsiveFontSize(2),
+                    fontWeight: "600",
+                  }}
+                >
+                  Transaction Method:
+                </Text>
+                <Text
+                  style={{
+                    color: "black",
+                    fontSize: responsiveFontSize(1.4),
+                    fontWeight: "400",
+                  }}
+                >
+                  {item.method}
+                </Text>
+              </View>
+              <View
+                style={{ alignItems: "center", flexDirection: "row", left: 10 }}
+              >
+                <Text
+                  style={{
+                    color: "black",
+                    fontSize: responsiveFontSize(2),
+                    fontWeight: "600",
+                  }}
+                >
+                  Amount:
+                </Text>
+                <Text
+                  style={{
+                    color: "black",
+                    fontSize: responsiveFontSize(1.4),
+                    fontWeight: "400",
+                  }}
+                >
+                  {"  "} {item.amount}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  alignSelf: "center",
+                  width: responsiveWidth(48),
+                  left: 10,
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "flex-start",
+                    justifyContent: "space-around",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, fontWeight: "700", color: "white"}}>
+                    Date
+                  </Text>
+                  <Text
+                    style={{fontSize: 12, fontWeight: "400", color: "white"}}>
+                    {item.created_at}
+                  </Text>
+                </View>
+              </View>
+              {item.status == "1" ? (
+                <TouchableOpacity
+                  style={{
+                    width: responsiveHeight(12),
+                    height: responsiveWidth(8),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "white",
+                    top: 4,
+                    borderRadius: 5,
+                    left: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: responsiveFontSize(1.4),
+                      fontWeight: "700",
+                    }}>
+                    Pending...
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          </LinearGradient>
+
         )}
-        // ListHeaderComponent={
-        //   <View style={styles.flatlistHeader}>
-        //     <Text style={styles.text}>Game Title</Text>
-        //     <Text style={styles.text}>Bet Horse</Text>
-        //     <Text style={styles.text}>State Date</Text>
-        //     <Text style={styles.text}>Amount</Text>
-        //     <Text style={styles.text}>Bet Date</Text>
-        //     <Text style={styles.text}>Status</Text>
-        //   </View>
-        // }
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+           
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -275,12 +269,52 @@ const HistoryScreen = () => {
 export default HistoryScreen;
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
   content: {
     alignItems: "flex-start",
     flexDirection: "column",
     justifyContent: "space-around",
     padding: 10,
-
   },
   largeBoxImage: {
     width: responsiveWidth(48),
@@ -313,8 +347,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     borderRadius: 8,
-    padding: 5, 
-    
+    padding: 5,
   },
   smallBox: {
     width: responsiveWidth(41),

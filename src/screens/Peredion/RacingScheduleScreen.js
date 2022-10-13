@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { ButtonGroup } from "@rneui/themed";
 import {
   responsiveWidth,
   responsiveFontSize,
@@ -28,96 +29,207 @@ import BettingHistoryScreen from "./BettingHistoryScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Loader from "../../components/Loader";
 import moment from "moment";
-const Tab = createMaterialTopTabNavigator();
-const array = [
-  {
-    id: 1,
-    RacingName: "Funds Transfers",
-    Horse: 12,
-    Bet: 100000,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 2,
-    RacingName: "Funds Transfers",
-    Horse: 3,
-    Bet: 100000,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 3,
-    RacingName: "Funds Transfers",
-    Horse: 4,
-    Bet: 0,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 4,
-    RacingName: "Funds Transfers",
-    Horse: 152,
-    Bet: 0,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 5,
-    RacingName: "Funds Transfers",
-    Horse: 121,
-    Bet: 0,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 6,
-    RacingName: "Funds Transfers",
-    Horse: 1233,
-    Bet: 0,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-  {
-    id: 7,
-    RacingName: "Funds Transfers",
-    Horse: 12123,
-    Bet: 0,
-    RacingDate: "Bank BCA",
-    Status: "Pending",
-    Action: "001 Days Ago",
-  },
-];
-
-const Single = () => {
-  return <View style={{ flex: 1, backgroundColor: "red" }}></View>;
-};
-const Double = () => {
-  return <View style={{ flex: 1, backgroundColor: "green" }}></View>;
-};
-
-const Triple = () => {
-  return <View style={{ flex: 1, backgroundColor: "purple" }}></View>;
-};
-
-const OddEven = () => {
-  return <View style={{ flex: 1, backgroundColor: "blue" }}></View>;
-};
-
-const BigSmall = () => {
-  return <View style={{ flex: 1, backgroundColor: "yellow" }}></View>;
-};
 
 const RacingScreen = ({ navigation }) => {
   const [data, onChangeData] = useState([]);
   const [loader, onChangeLoader] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [value, setValue] = React.useState([]);
+
+  const onValueChange = (e) => {
+    if (value.includes(e) == false && value.length < 2) {
+      setValue([e, ...value]);
+    } else {
+      const newArray = value.filter((item) => item != e);
+      setValue([...newArray]);
+    }
+  };
+
+  console.log(value, "ASDASD");
+
+  const Single = () => {
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              width: "90%",
+              height: 150,
+              flexWrap: "wrap",
+              paddingVertical: 10,
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <TouchableOpacity onPress={() => onValueChange("One")}>
+              <View
+                style={
+                  value.includes("One") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text
+                  style={
+                    value.includes("One") == true ? styles.text3 : styles.text2
+                  }
+                >
+                  One
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Two")}>
+              <View
+                style={
+                  value.includes("Two") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Two") == true ? styles.text3 : styles.text2
+                  }>Two</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Three")}>
+              <View
+                style={
+                  value.includes("Three") == true
+                    ? styles.btnChange
+                    : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Three") == true ? styles.text3 : styles.text2
+                  }>Three</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Four")}>
+              <View
+                style={
+                  value.includes("Four") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Four") == true ? styles.text3 : styles.text2
+                  }>Four</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Five")}>
+              <View
+                style={
+                  value.includes("Five") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Five") == true ? styles.text3 : styles.text2
+                  }>Five</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Six")}>
+              <View
+                style={
+                  value.includes("Six") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Six") == true ? styles.text3 : styles.text2
+                  }>Six</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Seven")}>
+              <View
+                style={
+                  value.includes("Seven") == true
+                    ? styles.btnChange
+                    : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Seven") == true ? styles.text3 : styles.text2
+                  }>Seven</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Eight")}>
+              <View
+                style={
+                  value.includes("Eight") == true
+                    ? styles.btnChange
+                    : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Eight") == true ? styles.text3 : styles.text2
+                  }>Eight</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Nine")}>
+              <View
+                style={
+                  value.includes("Nine") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Nine") == true ? styles.text3 : styles.text2
+                  }>Nine</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Ten")}>
+              <View
+                style={
+                  value.includes("Ten") == true ? styles.btnChange : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Ten") == true ? styles.text3 : styles.text2
+                  }>Ten</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Eleven")}>
+              <View
+                style={
+                  value.includes("Eleven") == true
+                    ? styles.btnChange
+                    : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Eleven") == true ? styles.text3 : styles.text2
+                  }>Eleven</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onValueChange("Twelve")}>
+              <View
+                style={
+                  value.includes("Twelve") == true
+                    ? styles.btnChange
+                    : styles.btn
+                }
+              >
+                <Text  style={
+                    value.includes("Twelve") == true ? styles.text3 : styles.texttext2
+                  }>Twelve</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+  const Double = () => {
+    return <View style={{ flex: 1, backgroundColor: "green" }}></View>;
+  };
+
+  const Triple = () => {
+    return <View style={{ flex: 1, backgroundColor: "purple" }}></View>;
+  };
+
+  const OddEven = () => {
+    return <View style={{ flex: 1, backgroundColor: "blue" }}></View>;
+  };
+
+  const BigSmall = () => {
+    return <View style={{ flex: 1, backgroundColor: "yellow" }}></View>;
+  };
 
   const apiHit = async () => {
     try {
@@ -126,7 +238,7 @@ const RacingScreen = ({ navigation }) => {
       if (res.status) {
         // let array = [];
         // array.push(res.data.data);
-        console.log(res.data, "DATA")
+        console.log(res.data, "DATA");
         onChangeData(res.data.data);
         onChangeLoader(false);
       }
@@ -182,17 +294,22 @@ const RacingScreen = ({ navigation }) => {
       <FlatList
         data={data}
         key={"#"}
+        numColumns={2}
+        columnWrapperStyle={{
+          flex: 1,
+          justifyContent: "space-around",
+        }}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
           <>
-            <View style={styles.flatlist}>
+            <View style={styles.largeBox}>
               <View
                 style={{
                   flexDirection: "column",
                   justifyContent: "flex-start",
                   alignItems: "flex-start",
-                    width: 150,
+                  // width: 150,
                 }}
               >
                 <Text style={styles.text1}>{item.title}</Text>
@@ -200,55 +317,64 @@ const RacingScreen = ({ navigation }) => {
                   {moment(item.start_date).format("MMMM Do YYYY, h:mm:ss a")}
                 </Text>
               </View>
-              <TouchableOpacity
-                onPress={() => setModalVisible(true)}
+              <View
                 style={{
-                  borderWidth: 1,
-                  width: 80,
-                  height: 60,
-                  borderRadius: 4,
-                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: responsiveWidth(42),
                 }}
               >
-                <View
+                <TouchableOpacity
+                  onPress={() => setModalVisible(true)}
                   style={{
+                    borderWidth: 1,
+                    width: 80,
+                    height: 60,
+                    borderRadius: 4,
                     justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
                   }}
                 >
-                  <Text style={styles.text1}>Game Time</Text>
-                  <Text style={styles.text1}>{item.duration}</Text>
-                </View>
-              </TouchableOpacity>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Text style={styles.text1}>Game Time</Text>
+                    <Text style={styles.text1}>{item.duration}</Text>
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => setModalVisible(true)}
-                style={{
-                  borderWidth: 1,
-                  width: 80,
-                  height: 60,
-                  borderRadius: 4,
-                  justifyContent: "center",
-                }}
-              >
-                <View
+                <TouchableOpacity
+                  onPress={() => setModalVisible(true)}
                   style={{
+                    borderWidth: 1,
+                    width: 80,
+                    height: 60,
+                    borderRadius: 4,
                     justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
                   }}
                 >
-                  <Text style={styles.text1}>Venue</Text>
-                  <Text style={styles.text1}>{item.venue}</Text>
-                </View>
-              </TouchableOpacity>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Text style={styles.text1}>Venue</Text>
+                    <Text style={styles.text1}>{item.venue}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 onPress={() => setModalVisible(true)}
                 style={{
                   borderWidth: 1,
-                  width: 60,
-                  height: 20,
+                  width: responsiveWidth(42),
+                  height: 40,
                   borderRadius: 4,
                   justifyContent: "center",
                   backgroundColor: "#138496",
@@ -349,36 +475,55 @@ const RacingScreen = ({ navigation }) => {
                   JUL 21 2022 10:10:00 PM
                 </Text>
               </View>
-              {
-                <View style={{backgroundColor:'red', width: 420}}>
-                <Tab.Navigator screenOptions={{ 
-                 
+
+              <View style={{ width: responsiveScreenWidth(100) }}>
+                <ButtonGroup
+                  buttons={[
+                    "Single",
+                    "Double",
+                    "Triple",
+                    "Odd/Even",
+                    "Big/Small",
+                  ]}
+                  selectedIndex={selectedIndex}
+                  // disabledSelectedStyle={{}}
+
+                  selectedButtonStyle={{ backgroundColor: "#D81254" }}
+                  // buttonContainerStyle={{backgroundColor: '#383838'}}
+                  onPress={(value) => {
+                    setSelectedIndex(value);
+                    console.log(value, "value");
+                  }}
+                  containerStyle={{ marginBottom: 20 }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "800",
+                    textAlign: "center",
+                  }}
+                >
+                  Select Horse By Number
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: responsiveWidth(100),
+                  height: responsiveHeight(30),
                 }}
               >
-                  <Tab.Screen
-                  
-                    name="Single"
-                    component={Single}
-                  />
-                  <Tab.Screen
-                    name="Double"
-                    component={Double}
-                  />
-                   <Tab.Screen
-                    name="Triple"
-                    component={Triple}
-                  />
-                   <Tab.Screen
-                    name="Odd/Even"
-                    component={OddEven}
-                  />
-                   <Tab.Screen
-                    name="Big/Small"
-                    component={BigSmall}
-                  />
-                </Tab.Navigator>
-                </View>
-              }
+                {selectedIndex == "0" ? (
+                  <Single />
+                ) : selectedIndex == "1" ? (
+                  <Double />
+                ) : selectedIndex == "2" ? (
+                  <Triple />
+                ) : selectedIndex == "3" ? (
+                  <OddEven />
+                ) : (
+                  selectedIndex == "4" && <BigSmall />
+                )}
+              </View>
             </ScrollView>
           </View>
         </View>
@@ -390,6 +535,46 @@ const RacingScreen = ({ navigation }) => {
 export default RacingScreen;
 
 const styles = StyleSheet.create({
+  btn: {
+    margin: 5,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    paddingHorizontal: 20,
+  },
+  btnChange: {
+    margin: 5,
+    backgroundColor: "#D81254",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    paddingHorizontal: 20,
+  },
+  largeBox: {
+    width: responsiveWidth(48),
+    height: responsiveHeight(25),
+    backgroundColor: "white",
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "column",
+    borderRadius: 8,
+    margin: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
   text: {
     fontSize: responsiveFontSize(1.2),
     fontWeight: "700",
@@ -470,5 +655,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  text2: {
+    textAlign: "center",
+    fontSize: 15,
+  },
+  text3: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 15,
   },
 });
